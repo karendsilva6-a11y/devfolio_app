@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'screens/perfil_screen.dart';
 import 'screens/dashboard_screen.dart';
+import 'theme/app_theme.dart';
 
-// Se você já tem a Tela de Perfil (Semana 1), mantenha o seu main.dart e apenas
-// adicione DashboardScreen como segunda tela (ex.: BottomNavigationBar).
 void main() => runApp(const DevFolioApp());
 
 class DevFolioApp extends StatelessWidget {
@@ -13,13 +13,39 @@ class DevFolioApp extends StatelessWidget {
     return MaterialApp(
       title: 'DevFolio App',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        useMaterial3: true,
-        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF4A00E0)),
+      theme: AppTheme.claro,
+      home: const HomeShell(),
+    );
+  }
+}
+
+class HomeShell extends StatefulWidget {
+  const HomeShell({super.key});
+
+  @override
+  State<HomeShell> createState() => _HomeShellState();
+}
+
+class _HomeShellState extends State<HomeShell> {
+  int _indice = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('DevFolio')),
+      body: IndexedStack(
+        index: _indice,
+        children: const [PerfilScreen(), DashboardScreen()],
       ),
-      home: Scaffold(
-        appBar: AppBar(title: const Text('Dashboard')),
-        body: const DashboardScreen(),
+      bottomNavigationBar: NavigationBar(
+        selectedIndex: _indice,
+        onDestinationSelected: (i) => setState(() => _indice = i),
+        destinations: const [
+          NavigationDestination(
+              icon: Icon(Icons.badge_outlined), label: 'Perfil'),
+          NavigationDestination(
+              icon: Icon(Icons.dashboard_outlined), label: 'Dashboard'),
+        ],
       ),
     );
   }

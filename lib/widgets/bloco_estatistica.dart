@@ -1,69 +1,49 @@
 import 'package:flutter/material.dart';
-import 'selo_destaque.dart';
 
-/// Bloco de estatística: Card Material com elevation e selo sobreposto opcional.
 class BlocoEstatistica extends StatelessWidget {
-  final String titulo;
   final String valor;
+  final String rotulo;
   final IconData icone;
-  final Color cor;
-  final String? selo;
 
   const BlocoEstatistica({
     super.key,
-    required this.titulo,
     required this.valor,
+    required this.rotulo,
     required this.icone,
-    required this.cor,
-    this.selo,
   });
 
   @override
   Widget build(BuildContext context) {
+    final cor = Theme.of(context).colorScheme.primary;
     return Card(
-      elevation: 6,
+      elevation: 4,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      child: Stack(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(12),
-            child: Center(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Icon(icone, size: 34, color: cor),
-                  const SizedBox(height: 8),
-                  FittedBox(
-                    child: Text(
-                      valor,
-                      style: TextStyle(
-                        fontSize: 28,
-                        fontWeight: FontWeight.bold,
-                        color: cor,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    titulo,
-                    maxLines: 2,
-                    textAlign: TextAlign.center,
-                    overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(fontSize: 13),
-                  ),
-                ],
+      child: Padding(
+        padding: const EdgeInsets.all(12),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(icone, size: 28, color: cor),
+            const SizedBox(height: 6),
+            FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text(
+                valor,
+                style: TextStyle(
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold,
+                  color: cor,
+                ),
               ),
             ),
-          ),
-          if (selo != null)
-            Positioned(
-              top: 8,
-              right: 8,
-              child: SeloDestaque(texto: selo!),
+            Text(
+              rotulo,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(fontSize: 14, color: Colors.black54),
             ),
-        ],
+          ],
+        ),
       ),
     );
   }

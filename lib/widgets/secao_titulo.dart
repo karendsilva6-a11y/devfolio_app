@@ -1,17 +1,29 @@
 import 'package:flutter/material.dart';
 
 class SecaoTitulo extends StatelessWidget {
-  final String texto;
-  const SecaoTitulo(this.texto, {super.key});
+  final String titulo;
+  final IconData icone;
+
+  const SecaoTitulo({super.key, required this.titulo, required this.icone});
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 20, bottom: 10),
-      child: Text(
-        texto,
-        style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-      ),
+    final cor = Theme.of(context).colorScheme.primary;
+    return Row(
+      children: [
+        Icon(icone, color: cor),
+        const SizedBox(width: 8),
+        Expanded(
+          child: Text(
+            titulo,
+            overflow: TextOverflow.ellipsis,
+            style: Theme.of(context)
+                .textTheme
+                .titleLarge
+                ?.copyWith(color: cor),
+          ),
+        ),
+      ],
     );
   }
 }
